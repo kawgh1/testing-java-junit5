@@ -1,5 +1,6 @@
 package guru.springframework.sfgpetclinic.controllers;
 
+import guru.springframework.sfgpetclinic.ControllerTests;
 import guru.springframework.sfgpetclinic.fauxspring.Model;
 import guru.springframework.sfgpetclinic.fauxspring.ModelMapImpl;
 import guru.springframework.sfgpetclinic.model.Vet;
@@ -18,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * created by kw on 12/3/2020 @ 9:59 PM
  */
-class VetControllerTest {
+class VetControllerTest implements ControllerTests {
 
     // Task list
 

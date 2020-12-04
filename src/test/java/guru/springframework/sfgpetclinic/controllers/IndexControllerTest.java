@@ -1,5 +1,6 @@
 package guru.springframework.sfgpetclinic.controllers;
 
+import guru.springframework.sfgpetclinic.ControllerTests;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +16,8 @@ import static org.junit.jupiter.api.condition.OS.*;
 /**
  * created by kw on 12/3/2020 @ 6:16 PM
  */
-class IndexControllerTest {
+
+class IndexControllerTest implements ControllerTests {
 
     IndexController controller;
 
