@@ -31,9 +31,10 @@ some challenges when creating many POJOs interacting with each other in a test e
 
 
 #### Mockito Maven dependencies
-org.mockito - mockito-core
-org.mockito - mockito-junit-jupiter
-both ver 2.23.0+
+- org.mockito - mockito-core
+- org.mockito - mockito-junit-jupiter
+- both ver 2.23.0+
+- scope - test
 
 
 # Introduction to JUnit 5 with Maven
