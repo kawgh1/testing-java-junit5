@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * created by kw on 12/3/2020 @ 9:18 PM
  */
+@Disabled("Disabled until add Mockito")
 class OwnerSDJpaServiceTest {
 
     OwnerSDJpaService service;
@@ -19,6 +20,7 @@ class OwnerSDJpaServiceTest {
         service = new OwnerSDJpaService(null, null, null);
     }
 
+    @Disabled("Disabled until add Mockito")
     @Test
     void findByLastName() {
         Owner foundOwner = service.findByLastName("Buck");
