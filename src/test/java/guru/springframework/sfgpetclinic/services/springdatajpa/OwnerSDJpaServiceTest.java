@@ -22,10 +22,11 @@ class OwnerSDJpaServiceTest {
         service = new OwnerSDJpaService(null, null, null);
     }
 
-    @Disabled
     @Test
+    @Disabled
     void findByLastName() {
-        Owner foundOwner = service.findByLastName("Buck");
+
+//        Owner foundOwner = service.findByLastName("Buck");
     }
 
     @Test

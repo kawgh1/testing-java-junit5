@@ -1,3 +1,8 @@
+### Circle CI Badge
+[![CircleCI](https://circleci.com/gh/kawgh1/testing-java-junit5.svg?style=svg)](https://circleci.com/gh/kawgh1/testing-java-junit5)
+
+go to README.md raw to view badge code
+
 # Introduction to JUnit 5 with Maven
 
 All source code examples in the repository are for my [Online Course - Testing Spring Beginner to Guru](https://www.udemy.com/testing-spring-boot-beginner-to-guru/?couponCode=GITHUB_REPO)
