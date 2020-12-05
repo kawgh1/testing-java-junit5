@@ -23,7 +23,7 @@ class OwnerSDJpaServiceTest {
     @Disabled("Disabled until add Mockito")
     @Test
     void findByLastName() {
-        Owner foundOwner = service.findByLastName("Buck");
+//         Owner foundOwner = service.findByLastName("Buck");
     }
 
     @Test
