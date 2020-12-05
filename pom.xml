@@ -82,6 +82,13 @@
             <version>1.3</version>
             <scope>test</scope>
         </dependency>
+<!--        required for building surefire reports -->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-report-plugin</artifactId>
+            <version>2.22.0</version>
+            <type>maven-plugin</type>
+        </dependency>
     </dependencies>
 
     <build>
@@ -91,6 +98,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
             </plugin>
+<!--            surefire plugin handles running unit tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -109,9 +117,46 @@
                     <argLine>
                         --illegal-access=permit
                     </argLine>
+<!--                    run tests only for these groups (annotated by @Tag("...") -->
+<!--                    <groups>controllers</groups>           -->
+<!--                    exclude test annotated with @Tag("..") -->
+<!--                    <excludedGroups>controllers</excludedGroups>                 -->
                 </configuration>
+<!--                below ensures that Integration Tests are run during the maven verify phase -->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>
+                                integration-test
+                            </goal>
+                            <goal>
+                                verify
+                            </goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+<!--            site plugin required update to run test reporting site mvn site -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.7.1</version>
             </plugin>
         </plugins>
     </build>
+
+<!--    maven uses reporting to generate reports use "mvn site" phase-->
+<!--    required surefire-report plugin -->
+<!--    to view tests site, go to target/site/index.html and view in browser from IDE -->
+<!--    then go to surefire reports on the left menu-->
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>2.22.0</version>
+            </plugin>
+        </plugins>
+    </reporting>
 
 </project>
