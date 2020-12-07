@@ -7,12 +7,18 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
+
+// assert J
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -125,6 +131,97 @@ class SpecialitySDJpaServiceTest {
     void delete() {
         service.delete(new Speciality());
     }
+
+    // Test throwing exception
+    @Test
+    void testDoThrow() {
+        // doThrow is the most common Mockito way to test throwing exceptions
+        doThrow(new RuntimeException("boom")).when(specialtyRepository).delete(any());
+
+        // assertJ method
+        assertThrows(RuntimeException.class, () -> specialtyRepository.delete(new Speciality()));
+
+        verify(specialtyRepository).delete(any());
+    }
+
+    // BDD approach
+    @Test
+    void testFindByIdThrows() {
+        //given
+        given(specialtyRepository.findById(1L)).willThrow(new RuntimeException("boom"));
+
+        // assertJ method
+        assertThrows(RuntimeException.class, () -> service.findById(1L));
+
+        //then
+        then(specialtyRepository).should().findById(1L);
+    }
+
+    // how to test BDD exception throwing where nothing is returned (like a delete method)
+    @Test
+    void testDeleteBDD() {
+        willThrow(new RuntimeException("boom")).given(specialtyRepository).delete(any());
+
+        assertThrows(RuntimeException.class, () -> specialtyRepository.delete(new Speciality()));
+
+        then(specialtyRepository).should().delete(any());
+    }
+
+
+    // Java 8 Lambdas in testing Argument Matchers
+    // if you have a String value in your test you don't want to change, declare it as a final String
+    @Test
+    void testSaveLambda() {
+        //given
+        final String MATCH_ME = "MATCH_ME";
+        Speciality speciality = new Speciality();
+        speciality.setDescription(MATCH_ME);
+        // test description not a match
+//        speciality.setDescription("not a match");
+
+        Speciality savedSpeciality = new Speciality();
+        savedSpeciality.setId(1L);
+
+        // need mock to only return on match MATCH_ME string
+        given(specialtyRepository.save(argThat(argument -> argument.getDescription().equals(MATCH_ME)))).willReturn(savedSpeciality);
+
+
+        // when
+        Speciality returnedSpeciality = service.save(speciality);
+
+        // then
+        assertThat(returnedSpeciality.getId()).isEqualTo(1L);
+    }
+
+    @Test
+    @MockitoSettings(strictness = Strictness.LENIENT)
+    void testSaveLambdaNoMatch() {
+        //given
+        final String MATCH_ME = "MATCH_ME";
+        Speciality speciality = new Speciality();
+//        speciality.setDescription(MATCH_ME);
+        // test description not a match
+        speciality.setDescription("not a match");
+
+        Speciality savedSpeciality = new Speciality();
+        savedSpeciality.setId(1L);
+
+        // need mock to only return on match MATCH_ME string
+        // because argThat() is a STRICT matcher, we have to set either the Mock lenient property to = true, or the Test Strictness = lenient
+        // this will allow the test to complete when it obviously doesn't match because that's part of what we're testing
+        given(specialtyRepository.save(argThat(argument -> argument.getDescription().equals(MATCH_ME)))).willReturn(savedSpeciality);
+
+
+        // when
+        Speciality returnedSpeciality = service.save(speciality);
+
+        // then
+        // since it isn't a match, we want to test/assert that it does NOT save -> i.e. that returnedSpeciality is null
+        assertNull(returnedSpeciality);
+    }
+
+
+
 
 
 }

@@ -23,6 +23,20 @@ import static org.mockito.Mockito.when;
 /**
  * created by kw on 12/5/2020 @ 1:39 PM
  */
+
+// To get Behavior Driven Development examples of this test class using MockitoBDD
+    // check out https://github.com/springframeworkguru/tb2g-bdd-mockito/blob/bdd-visit-tests/src/test/java/guru/springframework/sfgpetclinic/services/springdatajpa/VisitSDJpaServiceTest.java
+
+    // basically the same, just some different syntax, but easily readable
+
+    // syntax is like below
+
+    // given
+    // when
+    // then
+
+// Below is standard TDD Test Driven Development    model
+
 @ExtendWith(MockitoExtension.class)
 class VisitSDJpaServiceTest {
 
